@@ -20,7 +20,7 @@
     "recommendationResourceType": "Microsoft.DBforPostgreSQL/flexibleServers",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Find Database for PostgreSQL instances that are not zone redundant\nresources\n| where type == \"microsoft.dbforpostgresql/flexibleservers\"\n| where properties.highAvailability.mode != \"ZoneRedundant\"\n| project recommendationId = \"ca87914f-aac4-4783-ab67-82a6f936f194\", name, id, tags, param1 = \"ZoneRedundant: False\"\n"
+    "query": "// Azure Resource Graph Query\n// Find Database for PostgreSQL instances that are not zone redundant\nresources\n| where type == \"microsoft.dbforpostgresql/flexibleservers\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where properties.highAvailability.mode != \"ZoneRedundant\"\n| project recommendationId = \"ca87914f-aac4-4783-ab67-82a6f936f194\", name, id, tags, param1 = \"ZoneRedundant: False\"\n"
   },
   {
     "publishedToAdvisor": null,
@@ -247,6 +247,29 @@
   },
   {
     "publishedToAdvisor": null,
+    "aprlGuid": "d6d9e18a-9ad2-491e-878d-86d621785453",
+    "recommendationTypeId": null,
+    "recommendationMetadataState": "Active",
+    "learnMoreLink": [
+      {
+        "url": "https://learn.microsoft.com/en-us/azure/ai-services/diagnostic-logging",
+        "name": "Enable diagnostic logging for Azure AI services"
+      }
+    ],
+    "recommendationControl": "Monitoring and Alerting",
+    "longDescription": "All Logs and Metrics should be configured. These logs provide rich, frequent data about the operation of a resource that are used for issue identification and debugging.\n",
+    "pgVerified": false,
+    "description": "Enable diagnostic logging for Azure AI services and send the data to Log Analytics",
+    "potentialBenefits": "Enhanced monitoring and troubleshooting capabilities",
+    "publishedToLearn": false,
+    "tags": null,
+    "recommendationResourceType": "Microsoft.CognitiveServices/Accounts",
+    "recommendationImpact": "Low",
+    "automationAvailable": false,
+    "query": null
+  },
+  {
+    "publishedToAdvisor": null,
     "aprlGuid": "eb005943-40a8-194b-9db2-474d430046b7",
     "recommendationTypeId": null,
     "recommendationMetadataState": "Active",
@@ -289,7 +312,7 @@
     "recommendationResourceType": "Microsoft.ContainerRegistry/registries",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Find all Container Registries that do not have zone redundancy enabled\nresources\n| where type =~ \"microsoft.containerregistry/registries\"\n| where properties.zoneRedundancy != \"Enabled\"\n| project recommendationId = \"63491f70-22e4-3b4a-8b0c-845450e46fac\", name, id, tags, param1=strcat(\"zoneRedundancy: \", tostring(properties.zoneRedundancy))\n| order by id asc\n\n"
+    "query": "// Azure Resource Graph Query\n// Find all Container Registries that do not have zone redundancy enabled\nresources\n| where type =~ \"microsoft.containerregistry/registries\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where properties.zoneRedundancy != \"Enabled\"\n| project recommendationId = \"63491f70-22e4-3b4a-8b0c-845450e46fac\", name, id, tags, param1=strcat(\"zoneRedundancy: \", tostring(properties.zoneRedundancy))\n| order by id asc\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -539,7 +562,7 @@
     "recommendationResourceType": "Microsoft.ApiManagement/service",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Find all API Management instances that aren't Premium\nresources\n| where type =~ 'Microsoft.ApiManagement/service'\n| extend skuName = sku.name\n| where tolower(skuName) != tolower('premium')\n| project recommendationId = \"baf3bfc0-32a2-4c0c-926d-c9bf0b49808e\", name, id, tags, param1=strcat(\"SKU: \", skuName)\n\n"
+    "query": "// Azure Resource Graph Query\n// Find all API Management instances that aren't Premium\nresources\n| where type =~ 'Microsoft.ApiManagement/service'\n| extend skuName = sku.name\n| where tolower(skuName) != tolower('premium')\n| project recommendationId = \"baf3bfc0-32a2-4c0c-926d-c9bf0b49808e\", name, id, tags, param1=strcat(\"SKU: \", skuName)\n"
   },
   {
     "publishedToAdvisor": null,
@@ -566,7 +589,7 @@
     "recommendationResourceType": "Microsoft.ApiManagement/service",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Find all Premium API Management instances that aren't zone redundant\nresources\n| where type =~ 'Microsoft.ApiManagement/service'\n| extend skuName = sku.name\n| where tolower(skuName) == tolower('premium')\n| where isnull(zones) or array_length(zones) < 2\n| extend zoneValue = iff((isnull(zones)), \"null\", zones)\n| project recommendationId = \"740f2c1c-8857-4648-80eb-47d2c56d5a50\", name, id, tags, param1=\"Zones: No Zone or Zonal\", param2=strcat(\"Zones value: \", zoneValue )\n\n"
+    "query": "// Azure Resource Graph Query\n// Find all Premium API Management instances that aren't zone redundant\nresources\n| where type =~ 'Microsoft.ApiManagement/service'\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| extend skuName = sku.name\n| where tolower(skuName) == tolower('premium')\n| where isnull(zones) or array_length(zones) < 2\n| extend zoneValue = iff((isnull(zones)), \"null\", zones)\n| project recommendationId = \"740f2c1c-8857-4648-80eb-47d2c56d5a50\", name, id, tags, param1=\"Zones: No Zone or Zonal\", param2=strcat(\"Zones value: \", zoneValue )\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -947,7 +970,7 @@
     "recommendationResourceType": "Microsoft.Network/publicIPAddresses",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph query\n// List public IP addresses that are not Zone-Redundant\nResources\n| where type =~ \"Microsoft.Network/publicIPAddresses\" and sku.tier =~ \"Regional\"\n| where isempty(zones) or array_length(zones) <= 1\n| extend az = case(isempty(zones), \"Non-zonal\", array_length(zones) <= 1, strcat(\"Zonal (\", strcat_array(zones, \",\"), \")\"), zones)\n| project recommendationId = \"c63b81fb-7afc-894c-a840-91bb8a8dcfaf\", name, id, tags, param1 = strcat(\"sku: \", sku.name), param2 = strcat(\"availabilityZone: \", az)\n\n"
+    "query": "// Azure Resource Graph query\n// List public IP addresses that are not Zone-Redundant\nResources\n| where type =~ \"Microsoft.Network/publicIPAddresses\" and sku.tier =~ \"Regional\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where isempty(zones) or array_length(zones) <= 1\n| extend az = case(isempty(zones), \"Non-zonal\", array_length(zones) <= 1, strcat(\"Zonal (\", strcat_array(zones, \",\"), \")\"), zones)\n| project recommendationId = \"c63b81fb-7afc-894c-a840-91bb8a8dcfaf\", name, id, tags, param1 = strcat(\"sku: \", sku.name), param2 = strcat(\"availabilityZone: \", az)\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -1454,7 +1477,7 @@
     "recommendationResourceType": "Microsoft.Network/azureFirewalls",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// List all Azure Firewalls that are not configured with multiple availability zones or deployed without a zone\nresources\n| where type == 'microsoft.network/azurefirewalls'\n| where array_length(zones) <= 1 or isnull(zones)\n| where isempty(properties.virtualHub.id) or isnull(properties.virtualHub.id)\n| project recommendationId = \"c72b7fee-1fa0-5b4b-98e5-54bcae95bb74\", name, id, tags, param1=\"multipleZones:false\"\n\n"
+    "query": "// Azure Resource Graph Query\n// List all Azure Firewalls that are not configured with multiple availability zones or deployed without a zone\nresources\n| where type == 'microsoft.network/azurefirewalls'\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where array_length(zones) <= 1 or isnull(zones)\n| where isempty(properties.virtualHub.id) or isnull(properties.virtualHub.id)\n| project recommendationId = \"c72b7fee-1fa0-5b4b-98e5-54bcae95bb74\", name, id, tags, param1=\"multipleZones:false\"\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -2162,7 +2185,7 @@
     "recommendationResourceType": "Microsoft.Network/applicationGateways",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// list Application Gateways that are not configured to use at least 2 Availability Zones\nresources\n| where type =~ \"microsoft.network/applicationGateways\"\n| where isnull(zones) or array_length(zones) < 2\n| extend zoneValue = iff((isnull(zones)), \"null\", zones)\n| project recommendationId = \"c9c00f2a-3888-714b-a72b-b4c9e8fcffb2\", name, id, tags, param1=\"Zones: No Zone or Zonal\", param2=strcat(\"Zones value: \", zoneValue )\n\n"
+    "query": "// Azure Resource Graph Query\n// list Application Gateways that are not configured to use at least 2 Availability Zones\nresources\n| where type =~ \"microsoft.network/applicationGateways\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where isnull(zones) or array_length(zones) < 2\n| extend zoneValue = iff((isnull(zones)), \"null\", zones)\n| project recommendationId = \"c9c00f2a-3888-714b-a72b-b4c9e8fcffb2\", name, id, tags, param1=\"Zones: No Zone or Zonal\", param2=strcat(\"Zones value: \", zoneValue )\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -2266,7 +2289,7 @@
     "recommendationResourceType": "Microsoft.Network/virtualNetworkGateways",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// For all VNGs of type ExpressRoute, show any that do not have AZ in the SKU tier\nresources\n| where type =~ \"Microsoft.Network/virtualNetworkGateways\"\n| where properties.gatewayType == \"ExpressRoute\"\n| where properties.sku.tier !contains 'AZ'\n| project recommendationId = \"bbe668b7-eb5c-c746-8b82-70afdedf0cae\", name, id, tags, param1= strcat(\"sku-tier: \" , properties.sku.tier), param2=location\n| order by id asc\n\n"
+    "query": "// Azure Resource Graph Query\n// For all VNGs of type ExpressRoute, show any that do not have AZ in the SKU tier\nresources\n| where type =~ \"Microsoft.Network/virtualNetworkGateways\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where properties.gatewayType == \"ExpressRoute\"\n| where properties.sku.tier !contains 'AZ'\n| project recommendationId = \"bbe668b7-eb5c-c746-8b82-70afdedf0cae\", name, id, tags, param1= strcat(\"sku-tier: \" , properties.sku.tier), param2=location\n| order by id asc\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -2393,7 +2416,7 @@
     "recommendationResourceType": "Microsoft.Network/virtualNetworkGateways",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// For all VNGs of type Vpn, show any that do not have AZ in the SKU tier\nresources\n| where type =~ \"Microsoft.Network/virtualNetworkGateways\"\n| where properties.gatewayType == \"Vpn\"\n| where properties.sku.tier !contains 'AZ'\n| project recommendationId = \"5b1933a6-90e4-f642-a01f-e58594e5aab2\", name, id, tags, param1= strcat(\"sku-tier: \" , properties.sku.tier), param2=location\n| order by id asc\n\n"
+    "query": "// Azure Resource Graph Query\n// For all VNGs of type Vpn, show any that do not have AZ in the SKU tier\nresources\n| where type =~ \"Microsoft.Network/virtualNetworkGateways\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where properties.gatewayType == \"Vpn\"\n| where properties.sku.tier !contains 'AZ'\n| project recommendationId = \"5b1933a6-90e4-f642-a01f-e58594e5aab2\", name, id, tags, param1= strcat(\"sku-tier: \" , properties.sku.tier), param2=location\n| order by id asc\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -2516,7 +2539,7 @@
     "recommendationResourceType": "Microsoft.Network/virtualNetworkGateways",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Provides a list of zone-redundant Azure VPN gateways associated with non-zone-redundant Public IPs\nresources\n| where type =~ \"Microsoft.Network/virtualNetworkGateways\"\n| where properties.gatewayType == \"Vpn\"\n| where properties.sku.tier contains 'AZ'\n| mv-expand ipconfig = properties.ipConfigurations\n| extend pipId = tostring(ipconfig.properties.publicIPAddress.id)\n| join kind=inner (\n    resources\n    | where type == \"microsoft.network/publicipaddresses\"\n    | where isnull(zones) or array_length(zones) < 3   )\n    on $left.pipId == $right.id\n| project recommendationId = \"4bae5a28-5cf4-40d9-bcf1-623d28f6d917\", name, id, tags, param1 = strcat(\"PublicIpAddressName: \", name1), param2 = strcat (\"PublicIpAddressId: \",id1), param3 = strcat (\"PublicIpAddressTags: \",tags1)\n\n"
+    "query": "// Azure Resource Graph Query\n// Provides a list of zone-redundant Azure VPN gateways associated with non-zone-redundant Public IPs\nresources\n| where type =~ \"Microsoft.Network/virtualNetworkGateways\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where properties.gatewayType == \"Vpn\"\n| where properties.sku.tier contains 'AZ'\n| mv-expand ipconfig = properties.ipConfigurations\n| extend pipId = tostring(ipconfig.properties.publicIPAddress.id)\n| join kind=inner (\n    resources\n    | where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n    | where type == \"microsoft.network/publicipaddresses\"\n    | where isnull(zones) or array_length(zones) < 3   )\n    on $left.pipId == $right.id\n| project recommendationId = \"4bae5a28-5cf4-40d9-bcf1-623d28f6d917\", name, id, tags, param1 = strcat(\"PublicIpAddressName: \", name1), param2 = strcat (\"PublicIpAddressId: \",id1), param3 = strcat (\"PublicIpAddressTags: \",tags1)\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -2727,7 +2750,7 @@
     "recommendationResourceType": "Microsoft.Network/loadBalancers",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Find all LoadBalancers with with regional or zonal public IP Addresses\nresources\n| where type == \"microsoft.network/loadbalancers\"\n| where tolower(sku.name) != 'basic'\n| mv-expand feIPconfigs = properties.frontendIPConfigurations\n| extend\n    feConfigName = (feIPconfigs.name),\n    PrivateSubnetId = toupper(feIPconfigs.properties.subnet.id),\n    PrivateIPZones = feIPconfigs.zones,\n    PIPid = toupper(feIPconfigs.properties.publicIPAddress.id),\n    JoinID = toupper(id)\n| where isnotempty(PrivateSubnetId)\n| where isnull(PrivateIPZones) or array_length(PrivateIPZones) < 2\n| project name, feConfigName, id\n| union (resources\n    | where type == \"microsoft.network/loadbalancers\"\n    | where tolower(sku.name) != 'basic'\n    | mv-expand feIPconfigs = properties.frontendIPConfigurations\n    | extend\n        feConfigName = (feIPconfigs.name),\n        PIPid = toupper(feIPconfigs.properties.publicIPAddress.id),\n        JoinID = toupper(id)\n    | where isnotempty(PIPid)\n    | join kind=innerunique (\n        resources\n        | where type == \"microsoft.network/publicipaddresses\"\n        | where isnull(zones) or array_length(zones) < 2\n        | extend\n            LBid = toupper(substring(properties.ipConfiguration.id, 0, indexof(properties.ipConfiguration.id, '/frontendIPConfigurations'))),\n            InnerID = toupper(id)\n    ) on $left.PIPid == $right.InnerID)\n| project recommendationId = \"621dbc78-3745-4d32-8eac-9e65b27b7512\", name, id, tags, param1=\"Zones: No Zone or Zonal\", param2=strcat(\"Frontend IP Configuration:\", \" \", feConfigName)\n\n"
+    "query": "// Azure Resource Graph Query\n// Find all LoadBalancers with with regional or zonal public IP Addresses\nresources\n| where type == \"microsoft.network/loadbalancers\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where tolower(sku.name) != 'basic'\n| mv-expand feIPconfigs = properties.frontendIPConfigurations\n| extend\n    feConfigName = (feIPconfigs.name),\n    PrivateSubnetId = toupper(feIPconfigs.properties.subnet.id),\n    PrivateIPZones = feIPconfigs.zones,\n    PIPid = toupper(feIPconfigs.properties.publicIPAddress.id),\n    JoinID = toupper(id)\n| where isnotempty(PrivateSubnetId)\n| where isnull(PrivateIPZones) or array_length(PrivateIPZones) < 2\n| project name, feConfigName, id\n| union (resources\n    | where type == \"microsoft.network/loadbalancers\"\n    | where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n    | where tolower(sku.name) != 'basic'\n    | mv-expand feIPconfigs = properties.frontendIPConfigurations\n    | extend\n        feConfigName = (feIPconfigs.name),\n        PIPid = toupper(feIPconfigs.properties.publicIPAddress.id),\n        JoinID = toupper(id)\n    | where isnotempty(PIPid)\n    | join kind=innerunique (\n        resources\n        | where type == \"microsoft.network/publicipaddresses\"\n        | where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n        | where isnull(zones) or array_length(zones) < 2\n        | extend\n            LBid = toupper(substring(properties.ipConfiguration.id, 0, indexof(properties.ipConfiguration.id, '/frontendIPConfigurations'))),\n            InnerID = toupper(id)\n    ) on $left.PIPid == $right.InnerID)\n| project recommendationId = \"621dbc78-3745-4d32-8eac-9e65b27b7512\", name, id, tags, param1=\"Zones: No Zone or Zonal\", param2=strcat(\"Frontend IP Configuration:\", \" \", feConfigName)\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -2977,7 +3000,7 @@
     "recommendationResourceType": "Microsoft.SignalRService/SignalR",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Find SignalR instances that are not configured with the Premium tier\nresources\n| where type == \"microsoft.signalrservice/signalr\"\n| where sku.tier != \"Premium\"\n| project recommendationId = \"6a8b3db9-5773-413a-a127-4f7032f34bbd\", name, id, tags, param1 = \"AvailabilityZones: Single Zone\"\n| order by id asc\n\n"
+    "query": "// Azure Resource Graph Query\n// Find SignalR instances that are not configured with the Premium tier\nresources\n| where type == \"microsoft.signalrservice/signalr\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where sku.tier != \"Premium\"\n| project recommendationId = \"6a8b3db9-5773-413a-a127-4f7032f34bbd\", name, id, tags, param1 = \"AvailabilityZones: Single Zone\"\n| order by id asc\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -3050,7 +3073,7 @@
     "recommendationResourceType": "Microsoft.ContainerService/managedClusters",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Returns AKS clusters that do not have any availability zones enabled or only use a single zone\nresources\n| where type =~ \"Microsoft.ContainerService/managedClusters\"\n| project id, name, tags, location, pools = properties.agentPoolProfiles\n| mv-expand pool = pools\n| extend\n    numOfAvailabilityZones = iif(isnull(pool.availabilityZones), 0, array_length(pool.availabilityZones))\n| where numOfAvailabilityZones < 2\n| project\n    recommendationId = \"4f63619f-5001-439c-bacb-8de891287727\",\n    id,\n    name,\n    tags,\n    param1 = strcat(\"NodePoolName: \", pool.name),\n    param2 = strcat(\"Mode: \", pool.mode),\n    param3 = strcat(\"AvailabilityZones: \", iif(numOfAvailabilityZones == 0, \"None\", strcat(\"Zone \", strcat_array(pool.availabilityZones, \", \")))),\n    param4 = strcat(\"Location: \", location)\n"
+    "query": "// Azure Resource Graph Query\n// Returns AKS clusters that do not have any availability zones enabled or only use a single zone\nresources\n| where type =~ \"Microsoft.ContainerService/managedClusters\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| project id, name, tags, location, pools = properties.agentPoolProfiles\n| mv-expand pool = pools\n| extend\n    numOfAvailabilityZones = iif(isnull(pool.availabilityZones), 0, array_length(pool.availabilityZones))\n| where numOfAvailabilityZones < 2\n| project\n    recommendationId = \"4f63619f-5001-439c-bacb-8de891287727\",\n    id,\n    name,\n    tags,\n    param1 = strcat(\"NodePoolName: \", pool.name),\n    param2 = strcat(\"Mode: \", pool.mode),\n    param3 = strcat(\"AvailabilityZones: \", iif(numOfAvailabilityZones == 0, \"None\", strcat(\"Zone \", strcat_array(pool.availabilityZones, \", \")))),\n    param4 = strcat(\"Location: \", location)\n"
   },
   {
     "publishedToAdvisor": null,
@@ -3790,7 +3813,7 @@
     "recommendationResourceType": "Microsoft.Storage/storageAccounts",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// This query will return all storage accounts that are not using Zone or Region replication\nResources\n| where type =~ \"Microsoft.Storage/storageAccounts\"\n| where sku.name in~ (\"Standard_LRS\", \"Premium_LRS\")\n| project recommendationId = \"e6c7e1cc-2f47-264d-aa50-1da421314472\", name, id, tags, param1 = strcat(\"sku: \", sku.name)\n\n"
+    "query": "// Azure Resource Graph Query\n// This query will return all storage accounts that are not using Zone or Region replication\nResources\n| where type =~ \"Microsoft.Storage/storageAccounts\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where sku.name in~ (\"Standard_LRS\", \"Premium_LRS\")\n| project recommendationId = \"e6c7e1cc-2f47-264d-aa50-1da421314472\", name, id, tags, param1 = strcat(\"sku: \", sku.name)\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -4363,7 +4386,7 @@
     "recommendationResourceType": "Microsoft.Web/serverFarms",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// The query filters the qualified App Service Plans that do not have Zone Redundancy enabled.\n// Its important to check regions that support availability zones for Azure App Services running on multi-tenant and App Service Environments https://learn.microsoft.com/en-us/azure/reliability/reliability-app-service?tabs=graph%2Ccli#:~:text=The%20following%20regions%20support%20Azure%20App%20Services%20running%20on%20multi%2Dtenant%20environments%3A\n\nresources\n| where type =~ 'microsoft.web/serverfarms'\n| extend zoneRedundant = tobool(properties.zoneRedundant)\n| extend sku_tier = tostring(sku.tier)\n| where (tolower(sku_tier) contains \"isolated\" or tolower(sku_tier) contains \"premium\") and zoneRedundant == false\n| project recommendationId=\"88cb90c2-3b99-814b-9820-821a63f600dd\", name, id, tags, param1=sku_tier, param2=\"Not Zone Redundant\"\n\n"
+    "query": "// Azure Resource Graph Query\n// The query filters the qualified App Service Plans that do not have Zone Redundancy enabled.\n// Its important to check regions that support availability zones for Azure App Services running on multi-tenant and App Service Environments https://learn.microsoft.com/en-us/azure/reliability/reliability-app-service?tabs=graph%2Ccli#:~:text=The%20following%20regions%20support%20Azure%20App%20Services%20running%20on%20multi%2Dtenant%20environments%3A\n\nresources\n| where type =~ 'microsoft.web/serverfarms'\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| extend zoneRedundant = tobool(properties.zoneRedundant)\n| extend sku_tier = tostring(sku.tier)\n| where (tolower(sku_tier) contains \"isolated\" or tolower(sku_tier) contains \"premium\") and zoneRedundant == false\n| project recommendationId=\"88cb90c2-3b99-814b-9820-821a63f600dd\", name, id, tags, param1=sku_tier, param2=\"Not Zone Redundant\"\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -4482,7 +4505,7 @@
     "recommendationResourceType": "Microsoft.Cache/Redis",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Find Cache for Redis instances with one or no Zones selected\nresources\n| where type =~ \"microsoft.cache/redis\"\n| where array_length(zones) <= 1 or isnull(zones)\n| project recommendationId = \"5a44bd30-ae6a-4b81-9b68-dc3a8ffca4d8\", name, id, tags, param1 = \"AvailabilityZones: Single Zone\"\n| order by id asc\n\n"
+    "query": "// Azure Resource Graph Query\n// Find Cache for Redis instances with one or no Zones selected\nresources\n| where type =~ \"microsoft.cache/redis\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where array_length(zones) <= 1 or isnull(zones)\n| project recommendationId = \"5a44bd30-ae6a-4b81-9b68-dc3a8ffca4d8\", name, id, tags, param1 = \"AvailabilityZones: Single Zone\"\n| order by id asc\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -5534,7 +5557,7 @@
     "recommendationResourceType": "Microsoft.Compute/virtualMachineScaleSets",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Find VMSS instances with one or no Zones selected\nresources\n| where type == \"microsoft.compute/virtualmachinescalesets\"\n| where array_length(zones) <= 1 or isnull(zones)\n| project recommendationId = \"1422c567-782c-7148-ac7c-5fc14cf45adc\", name, id, tags, param1 = \"AvailabilityZones: Single Zone\"\n| order by id asc\n\n"
+    "query": "// Azure Resource Graph Query\n// Find VMSS instances with one or no Zones selected\nresources\n| where type == \"microsoft.compute/virtualmachinescalesets\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where array_length(zones) <= 1 or isnull(zones)\n| project recommendationId = \"1422c567-782c-7148-ac7c-5fc14cf45adc\", name, id, tags, param1 = \"AvailabilityZones: Single Zone\"\n| order by id asc\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -5634,7 +5657,7 @@
     "recommendationResourceType": "Microsoft.Compute/virtualMachines",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Find all VMs that are not assigned to a Zone\nResources\n| where type =~ 'Microsoft.Compute/virtualMachines'\n| where isnull(zones)\n| project recommendationId=\"2bd0be95-a825-6f47-a8c6-3db1fb5eb387\", name, id, tags, param1=\"No Zone\"\n\n"
+    "query": "// Azure Resource Graph Query\n// Find all VMs that are not assigned to a Zone\nResources\n| where type =~ 'Microsoft.Compute/virtualMachines'\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where isnull(zones)\n| project recommendationId=\"2bd0be95-a825-6f47-a8c6-3db1fb5eb387\", name, id, tags, param1=\"No Zone\"\n"
   },
   {
     "publishedToAdvisor": null,
@@ -6226,7 +6249,7 @@
     "recommendationResourceType": "Microsoft.Compute/virtualMachines",
     "recommendationImpact": "Medium",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Find eligible Disks that are not zonal nor zone redundant\nresources\n| where type == 'microsoft.compute/disks'\n| where sku has \"Premium_LRS\" or sku has \"StandardSSD_LRS\"\n| where sku.name has_cs 'ZRS' or array_length(zones) > 0\n| project recommendationId=\"fa0cf4f5-0b21-47b7-89a9-ee936f193ce1\", name, id, tags, param1 = sku, param2 = sku.name\n"
+    "query": "// Azure Resource Graph Query\n// Find eligible Disks that are not zonal nor zone redundant\nresources\n| where type == 'microsoft.compute/disks'\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where sku has \"Premium_LRS\" or sku has \"StandardSSD_LRS\"\n| where sku.name has_cs 'ZRS' or array_length(zones) > 0\n| project recommendationId=\"fa0cf4f5-0b21-47b7-89a9-ee936f193ce1\", name, id, tags, param1 = sku, param2 = sku.name\n"
   },
   {
     "publishedToAdvisor": null,
@@ -6322,7 +6345,7 @@
     "recommendationResourceType": "Microsoft.Compute/galleries",
     "recommendationImpact": "Medium",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Query to list all image versions and its associated image and gallery name whose Storage account type is not using ZRS\nresources\n| where type =~ \"microsoft.compute/galleries/images/versions\"\n| extend GalleryName = tostring(split(tostring(id), \"/\")[8]), ImageName = tostring(split(tostring(id), \"/\")[10])\n| extend StorageAccountType = tostring(properties.publishingProfile.storageAccountType)\n| where StorageAccountType !has \"ZRS\"\n| project RecommendationId=\"488dcc8b-f2e3-40ce-bf95-73deb2db095f\",name,id,tags,param1=strcat(\"GalleryName: \",GalleryName),param2=strcat(\"ImageName: \",ImageName),param3=strcat(\"StorageAccountType: \",StorageAccountType)\n\n"
+    "query": "// Azure Resource Graph Query\n// Query to list all image versions and its associated image and gallery name whose Storage account type is not using ZRS\nresources\n| where type =~ \"microsoft.compute/galleries/images/versions\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| extend GalleryName = tostring(split(tostring(id), \"/\")[8]), ImageName = tostring(split(tostring(id), \"/\")[10])\n| extend StorageAccountType = tostring(properties.publishingProfile.storageAccountType)\n| where StorageAccountType !has \"ZRS\"\n| project RecommendationId=\"488dcc8b-f2e3-40ce-bf95-73deb2db095f\",name,id,tags,param1=strcat(\"GalleryName: \",GalleryName),param2=strcat(\"ImageName: \",ImageName),param3=strcat(\"StorageAccountType: \",StorageAccountType)\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -7313,7 +7336,7 @@
     "recommendationResourceType": "Microsoft.App/managedenvironments",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// The query filters the qualified Container app environments that do not have Zone Redundancy enabled.\nresources\n| where type =~ \"microsoft.app/managedenvironments\"\n| where tobool(properties.zoneRedundant) == false\n| project recommendationId = \"f4201965-a88d-449d-b3b4-021394719eb2\", name, id, tags, param1 = \"AvailabilityZones: Single Zone\"\n| order by id asc\n"
+    "query": "// Azure Resource Graph Query\n// The query filters the qualified Container app environments that do not have Zone Redundancy enabled.\nresources\n| where type =~ \"microsoft.app/managedenvironments\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where tobool(properties.zoneRedundant) == false\n| project recommendationId = \"f4201965-a88d-449d-b3b4-021394719eb2\", name, id, tags, param1 = \"AvailabilityZones: Single Zone\"\n| order by id asc\n"
   },
   {
     "publishedToAdvisor": null,
@@ -7524,7 +7547,7 @@
     "recommendationResourceType": "Microsoft.Sql/servers",
     "recommendationImpact": "Medium",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Finds non-zone redundant SQL databases and lists them\nResources\n| where type =~ 'microsoft.sql/servers/databases'\n| where tolower(tostring(properties.zoneRedundant))=~'false'\n|project recommendationId = \"c0085c32-84c0-c247-bfa9-e70977cbf108\", name, id, tags\n\n\n"
+    "query": "// Azure Resource Graph Query\n// Finds non-zone redundant SQL databases and lists them\nResources\n| where type =~ 'microsoft.sql/servers/databases'\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where tolower(tostring(properties.zoneRedundant))=~'false'\n|project recommendationId = \"c0085c32-84c0-c247-bfa9-e70977cbf108\", name, id, tags\n\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -7912,7 +7935,7 @@
     "recommendationResourceType": "Microsoft.NetApp/netAppAccounts",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// This Resource Graph query will return all Azure NetApp Files volumes without an availability zone defined.\nResources\n| where type =~ \"Microsoft.NetApp/netAppAccounts/capacityPools/volumes\"\n| where array_length(zones) == 0 or isnull(zones)\n| project recommendationId = \"47d100a5-7f85-5742-967a-67eb5081240a\", name, id, tags\n\n"
+    "query": "// Azure Resource Graph Query\n// This Resource Graph query will return all Azure NetApp Files volumes without an availability zone defined.\nResources\n| where type =~ \"Microsoft.NetApp/netAppAccounts/capacityPools/volumes\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where array_length(zones) == 0 or isnull(zones)\n| project recommendationId = \"47d100a5-7f85-5742-967a-67eb5081240a\", name, id, tags\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -8027,7 +8050,7 @@
     "recommendationResourceType": "Microsoft.NetApp/netAppAccounts",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// This Resource Graph query will return all Azure NetApp Files volumes without cross-zone replication.\nresources\n| where type == \"microsoft.netapp/netappaccounts/capacitypools/volumes\"\n| extend remoteVolumeRegion = properties.dataProtection.replication.remoteVolumeRegion\n| extend volumeType = properties.volumeType\n| extend replicationType = iff((remoteVolumeRegion == location), \"CZR\", iff((remoteVolumeRegion == \"\"),\"n/a\",\"CRR\"))\n| where replicationType != \"CZR\" and volumeType != \"DataProtection\"\n| project recommendationId = \"e3d742e1-dacd-9b48-b6b1-510ec9f87c96\", name, id, tags\n\n"
+    "query": "// Azure Resource Graph Query\n// This Resource Graph query will return all Azure NetApp Files volumes without cross-zone replication.\nresources\n| where type == \"microsoft.netapp/netappaccounts/capacitypools/volumes\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| extend remoteVolumeRegion = properties.dataProtection.replication.remoteVolumeRegion\n| extend volumeType = properties.volumeType\n| extend replicationType = iff((remoteVolumeRegion == location), \"CZR\", iff((remoteVolumeRegion == \"\"),\"n/a\",\"CRR\"))\n| where replicationType != \"CZR\" and volumeType != \"DataProtection\"\n| project recommendationId = \"e3d742e1-dacd-9b48-b6b1-510ec9f87c96\", name, id, tags\n\n"
   },
   {
     "publishedToAdvisor": null,
@@ -8477,7 +8500,7 @@
     "recommendationResourceType": "Microsoft.DBforMySQL/flexibleServers",
     "recommendationImpact": "High",
     "automationAvailable": true,
-    "query": "// Azure Resource Graph Query\n// Find Database for MySQL instances that are not zone redundant\nresources\n| where type == \"microsoft.dbformysql/flexibleservers\"\n| where properties.highAvailability.mode != \"ZoneRedundant\"\n| project recommendationId = \"88856605-53d8-4bbd-a75b-4a7b14939d32\", name, id, tags, param1 = \"ZoneRedundant: False\"\n"
+    "query": "// Azure Resource Graph Query\n// Find Database for MySQL instances that are not zone redundant\nresources\n| where type == \"microsoft.dbformysql/flexibleservers\"\n| where location in~ (\"australiaeast\", \"brazilsouth\", \"canadacentral\", \"centralindia\", \"centralus\", \"eastasia\", \"eastus\", \"eastus2\", \"francecentral\", \"germanywestcentral\", \"israelcentral\", \"italynorth\", \"japaneast\", \"japanwest\", \"koreacentral\", \"mexicocentral\", \"newzealandnorth\", \"northeurope\", \"norwayeast\", \"polandcentral\", \"qatarcentral\", \"southafricanorth\", \"southcentralus\", \"southeastasia\", \"spaincentral\", \"swedencentral\", \"switzerlandnorth\", \"uaenorth\", \"uksouth\", \"westeurope\", \"westus2\", \"westus3\", \"usgovvirginia\", \"chinanorth3\")\n| where properties.highAvailability.mode != \"ZoneRedundant\"\n| project recommendationId = \"88856605-53d8-4bbd-a75b-4a7b14939d32\", name, id, tags, param1 = \"ZoneRedundant: False\"\n"
   },
   {
     "publishedToAdvisor": null,
